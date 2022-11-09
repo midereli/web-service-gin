@@ -1,13 +1,8 @@
-FROM 1.19.3-alpine3.16
+From golang:1.16
 
-RUN go install github.com/beego/bee/v2@latest
+WORKDIR /go/src/app
+COPY . .
 
-ENV GO111MODULE=on
-ENV GOFLAGS=-mod=vendor
+RUN go build -o server server.go
 
-ENV APP_HOME /go/src/mathapp
-RUN mkdir -p "$APP_HOME"
-
-WORKDIR "$APP_HOME"
-EXPOSE 8010
-CMD ["bee", "run"]
+CMD ["./server"]
